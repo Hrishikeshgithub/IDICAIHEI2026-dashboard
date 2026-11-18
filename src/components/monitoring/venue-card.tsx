@@ -26,6 +26,18 @@ export function VenueCard({ venue }: { venue: VenueOverview }) {
       {m ? (
         <>
           <p className="mt-3 truncate text-xs text-slate-600" title={m.meeting_title}>{m.meeting_title}</p>
+          {m.expected_participants > 0 && (
+            <div
+              className="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-100"
+              role="progressbar"
+              aria-label="Participants versus expected"
+              aria-valuemin={0}
+              aria-valuemax={m.expected_participants}
+              aria-valuenow={m.current_participants}
+            >
+              <div className="h-full rounded-full bg-slate-900" style={{ width: `${Math.min(100, Math.round((m.current_participants / m.expected_participants) * 100))}%` }} />
+            </div>
+          )}
           <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
             <div>
               <dt className="text-slate-500">Participants</dt>

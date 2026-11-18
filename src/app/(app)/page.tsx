@@ -11,12 +11,20 @@ const CHART_COLORS: Record<MeetingStatus, string> = {
   scheduled: "#94a3b8", starting: "#0ea5e9", live: "#10b981", waiting: "#f59e0b", ended: "#a1a1aa", technical_issue: "#ef4444",
 };
 
-function Tile({ label, value, hint }: { label: string; value: number | string; hint?: string }) {
+const TONES = {
+  indigo: "bg-tile-indigo border-transparent",
+  green: "bg-tile-green border-transparent",
+  amber: "bg-tile-amber border-transparent",
+  rose: "bg-tile-rose border-transparent",
+  plain: "bg-white border-slate-200/70",
+} as const;
+
+function Tile({ label, value, hint, tone = "plain" }: { label: string; value: number | string; hint?: string; tone?: keyof typeof TONES }) {
   return (
-    <div className="rounded-2xl border border-slate-200/70 bg-white shadow-card p-4">
+    <div className={`rounded-2xl border shadow-card p-4 ${TONES[tone]}`}>
       <p className="text-xs font-medium text-slate-500">{label}</p>
       <p className="mt-1 text-2xl font-semibold tabular-nums text-slate-900">{value}</p>
-      {hint && <p className="mt-0.5 text-xs text-slate-400">{hint}</p>}
+      {hint && <p className="mt-0.5 text-xs text-slate-500">{hint}</p>}
     </div>
   );
 }
@@ -54,14 +62,14 @@ export default async function OverviewPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-8">
-        <Tile label="Total venues" value={s.totalVenues} />
-        <Tile label="Active (live)" value={s.byStatus.live} />
+        <Tile tone="indigo" label="Total venues" value={s.totalVenues} />
+        <Tile tone="green" label="Active (live)" value={s.byStatus.live} />
         <Tile label="Scheduled" value={s.byStatus.scheduled} />
         <Tile label="Completed" value={s.byStatus.ended} />
-        <Tile label="Waiting to start" value={s.byStatus.waiting + s.byStatus.starting} hint="Waiting + starting" />
-        <Tile label="Participants" value={s.totalParticipants} hint="Across all venues" />
-        <Tile label="Coordinators connected" value={`${s.coordinatorsConnected}/${s.totalVenues}`} />
-        <Tile label="Need attention" value={s.attention.length} />
+        <Tile tone="amber" label="Waiting to start" value={s.byStatus.waiting + s.byStatus.starting} hint="Waiting + starting" />
+        <Tile tone="indigo" label="Participants" value={s.totalParticipants} hint="Across all venues" />
+        <Tile tone="green" label="Coordinators connected" value={`${s.coordinatorsConnected}/${s.totalVenues}`} />
+        <Tile tone="rose" label="Need attention" value={s.attention.length} />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
