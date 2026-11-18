@@ -6,6 +6,7 @@ import type { AppRole } from "@/lib/auth";
 import { signOut } from "@/app/login/actions";
 import { cn } from "@/lib/utils";
 import { SidebarNav } from "./sidebar";
+import { BrandMark } from "./brand-logo";
 import { SimulationControl } from "./simulation-control";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -34,7 +35,7 @@ const isLg = () => window.matchMedia("(min-width: 1024px)").matches;
 function Brand({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex min-w-0 items-center gap-3">
-      <div className="btn-accent grid size-10 shrink-0 place-items-center rounded-2xl text-sm font-bold tracking-tight">IC</div>
+      <BrandMark size={40} />
       <div className={cn("min-w-0 overflow-hidden whitespace-nowrap transition-opacity duration-200", compact && "opacity-0")}>
         <p className="font-heading text-[15px] font-semibold leading-tight text-slate-900">Conference Ops</p>
         <p className="text-xs text-slate-500">IDICAIHEI-2026</p>
