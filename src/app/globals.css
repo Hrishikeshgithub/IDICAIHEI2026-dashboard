@@ -17,10 +17,10 @@
   --color-slate-800: #292524;
   --color-slate-900: #18181b;
   --shadow-card: 0 1px 2px rgb(24 24 27 / 0.04), 0 8px 24px rgb(24 24 27 / 0.05);
-  --color-tile-indigo: rgb(173 214 242 / 0.55);
+  --color-tile-indigo: rgb(178 224 238 / 0.6);
   --color-tile-green: rgb(220 252 231 / 0.62);
   --color-tile-amber: rgb(255 228 140 / 0.6);
-  --color-tile-rose: rgb(255 207 150 / 0.6);
+  --color-tile-rose: rgb(250 203 216 / 0.62);
 }
 
 /* Liquid glass + ambient tokens (static: always emitted). */
@@ -29,14 +29,15 @@
   --color-glass-strong: rgb(255 255 255 / 0.7);
   --color-glass-border: rgb(255 255 255 / 0.75);
   --color-glass-highlight: rgb(255 255 255 / 0.9);
-  --color-glass-shadow: rgb(92 64 10 / 0.16);
-  --color-canvas: #f6f3ea;
-  --color-blob-1: #ffd25e;
-  --color-blob-2: #a9d6f3;
-  --color-blob-3: #a6e3d2;
-  --color-blob-4: #ffe9a0;
-  --color-accent-1: #ffc61f;
-  --color-accent-2: #ff9500;
+  --color-glass-shadow: rgb(52 44 120 / 0.16);
+  --color-canvas: #f2f4f9;
+  --color-blob-1: #9ad6e8;
+  --color-blob-2: #c0b9f5;
+  --color-blob-3: #f5afc3;
+  --color-blob-4: #a9c8f2;
+  --color-accent-1: #2783a6; /* Adani logo: teal */
+  --color-accent-mid: #5b52ae; /* violet */
+  --color-accent-2: #bf4866; /* pink */
   --font-heading: var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -179,21 +180,21 @@ html.dark {
   --color-slate-800: #e5e8ed;
   --color-slate-900: #f4f5f7;
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.25);
-  --color-tile-indigo: rgb(56 160 226 / 0.2);
+  --color-tile-indigo: rgb(39 131 166 / 0.24);
   --color-tile-green: rgb(34 197 94 / 0.16);
   --color-tile-amber: rgb(255 182 0 / 0.18);
-  --color-tile-rose: rgb(255 138 0 / 0.18);
+  --color-tile-rose: rgb(191 72 102 / 0.22);
   --color-glass: rgb(24 27 37 / 0.5);
   --color-glass-strong: rgb(26 29 40 / 0.72);
   --color-glass-border: rgb(255 255 255 / 0.09);
   --color-glass-highlight: rgb(255 255 255 / 0.1);
   --color-glass-shadow: rgb(0 0 0 / 0.55);
-  --color-canvas: #0a0b0d;
-  --color-blob-1: #8c5f00;
-  --color-blob-2: #0b5584;
-  --color-blob-3: #0f6b62;
-  --color-blob-4: #6e5410;
-  --background: #0a0b0d;
+  --color-canvas: #07080d;
+  --color-blob-1: #0e6580;
+  --color-blob-2: #4b3da8;
+  --color-blob-3: #9b2c52;
+  --color-blob-4: #1d4e9b;
+  --background: #07080d;
   --foreground: #f4f5f7;
   --primary: #f4f5f7;
   --primary-foreground: #0c0e13;
@@ -248,16 +249,16 @@ html.dark {
       0 30px 60px -24px var(--color-glass-shadow);
   }
   .btn-accent {
-    color: #1d1503; /* dark text on gold: ~10:1 contrast */
-    background: linear-gradient(135deg, var(--color-accent-1), var(--color-accent-2));
-    box-shadow: 0 10px 26px -10px rgb(255 160 0 / 0.7), inset 0 1px 0 rgb(255 255 255 / 0.45);
+    color: #fff;
+    background: linear-gradient(135deg, var(--color-accent-1), var(--color-accent-mid) 55%, var(--color-accent-2));
+    box-shadow: 0 10px 26px -10px rgb(91 82 174 / 0.65), inset 0 1px 0 rgb(255 255 255 / 0.3);
     background-size: 160% 160%;
     transition: background-position 0.6s ease, transform 0.2s ease, box-shadow 0.3s ease;
   }
   .btn-accent:hover { background-position: 100% 50%; }
   .btn-accent:active { transform: scale(0.98); }
   .text-gradient {
-    background: linear-gradient(120deg, #a85f00, #d98200 55%, #0f6fa8);
+    background: linear-gradient(120deg, #2783a6, #5b52ae 55%, #bf4866);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
