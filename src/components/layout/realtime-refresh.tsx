@@ -7,7 +7,9 @@ import { createClient } from "@/lib/supabase/client";
 /**
  * Subscribes to Supabase Realtime (RLS applies, so users only receive rows they may read)
  * and re-renders server components when meetings, events or alerts change.
- * Refreshes are debounced so a burst of changes causes one re-render.
+ * Refreshes are throttled, not debounced: the first change in a burst schedules one refresh ~1.5s later and
+ * further changes do not push it back. (A debounce starves under the simulator's constant stream of events
+ * and the page would never update.)
  */
 export function RealtimeRefresh() {
   const router = useRouter();
@@ -16,8 +18,11 @@ export function RealtimeRefresh() {
     const supabase = createClient();
     let timer: ReturnType<typeof setTimeout> | undefined;
     const refresh = () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => router.refresh(), 1500);
+      if (timer) return; // a refresh is already scheduled
+      timer = setTimeout(() => {
+        timer = undefined;
+        router.refresh();
+      }, 1500);
     };
 
     const channel = supabase
