@@ -1,6 +1,7 @@
 import { SeverityBadge } from "./severity-badge";
 import { formatDateTime, formatTime } from "@/lib/labels";
 import type { EventRecord, MetricRecord, NotificationRecord, ParticipantRecord } from "@/lib/data/queries";
+import type { ScheduleBlock } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 const card = "glass rounded-3xl p-4";
@@ -106,6 +107,39 @@ export function TechnicalSection({ metrics, alerts }: { metrics: MetricRecord[];
           ))}
         </ul>
       )}
+    </section>
+  );
+}
+
+/** Programme for the session: time blocks with the paper IDs presented in each. */
+export function ScheduleSection({ blocks }: { blocks: ScheduleBlock[] }) {
+  if (!blocks || blocks.length === 0) return null;
+  const total = blocks.reduce((n, b) => n + b.papers.length, 0);
+  return (
+    <section className={cn(card, "md:col-span-2")}>
+      <h2 className="text-sm font-semibold text-slate-900">Session programme</h2>
+      <p className="mb-3 text-xs text-slate-500">{total} papers across {blocks.filter((b) => b.kind === "session").length} block(s). Programme times as published.</p>
+      <ol className="space-y-3">
+        {blocks.map((b) => (
+          <li key={`${b.label}-${b.start}`} className={cn("rounded-2xl p-3", b.kind === "break" ? "bg-slate-900/[0.04] dark:bg-white/[0.04]" : "bg-white/40 dark:bg-white/[0.04]")}>
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <p className="text-sm font-semibold text-slate-900">{b.label}</p>
+              <p className="text-xs tabular-nums text-slate-500">{b.start} – {b.end} HRS</p>
+            </div>
+            {b.kind === "session" && (
+              b.papers.length === 0 ? (
+                <p className="mt-1 text-xs text-slate-500">No papers scheduled in this block.</p>
+              ) : (
+                <ul className="mt-2 flex flex-wrap gap-1.5" aria-label={`${b.label} paper IDs`}>
+                  {b.papers.map((id) => (
+                    <li key={id} className="rounded-lg border border-slate-900/10 bg-white/60 px-2 py-0.5 text-xs font-medium tabular-nums text-slate-700 dark:border-white/10 dark:bg-white/[0.06]">{id}</li>
+                  ))}
+                </ul>
+              )
+            )}
+          </li>
+        ))}
+      </ol>
     </section>
   );
 }

@@ -16,7 +16,7 @@ export default async function LiveMonitoringPage({ searchParams }: { searchParam
           Operational status for each venue. This view shows meeting metadata only; open a venue&apos;s meeting link to see its session.
         </p>
       </div>
-      <VenueFilters action="/live-monitoring" q={filters.q} category={filters.category} status={filters.status} />
+      <VenueFilters action="/live-monitoring" q={filters.q} category={filters.category} status={filters.status} day={filters.day} />
       {venues.length === 0 ? (
         <p className="glass rounded-3xl border-dashed p-8 text-center text-sm text-slate-500">
           No venues match. {Object.keys(sp).length === 0 && "Seed demo data from Settings to populate the dashboard."}

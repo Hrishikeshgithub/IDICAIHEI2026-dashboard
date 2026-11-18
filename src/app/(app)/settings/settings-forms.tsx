@@ -45,7 +45,7 @@ export function DemoDataControls({ hasData }: { hasData: boolean }) {
     <div className="space-y-3">
       <div className="flex flex-wrap items-center gap-2">
         <Button disabled={pending || hasData} onClick={() => run(seedDemoAction)}>
-          {pending && !confirming ? "Working…" : "Seed 18 demo venues"}
+          {pending && !confirming ? "Working…" : "Seed demo programme (24 sessions)"}
         </Button>
         {!confirming ? (
           <Button variant="outline" disabled={pending || !hasData} onClick={() => setConfirming(true)}>
@@ -54,7 +54,7 @@ export function DemoDataControls({ hasData }: { hasData: boolean }) {
         ) : (
           <>
             <Button variant="destructive" disabled={pending} onClick={() => run(resetDemoAction)}>
-              Confirm: delete all venues, meetings and demo coordinators
+              Confirm: delete all sessions, meetings and demo coordinators
             </Button>
             <Button variant="ghost" onClick={() => setConfirming(false)}>Cancel</Button>
           </>

@@ -26,7 +26,8 @@ export default async function SettingsPage() {
       <section className="glass rounded-3xl p-5">
         <h2 className="text-sm font-semibold text-slate-900">Demo data</h2>
         <p className="mb-4 mt-1 text-sm text-slate-500">
-          Creates 18 venues (9 Medical &amp; Healthcare, 5 Education, 4 Industry) with coordinators and meetings.
+          Creates the demo programme: 24 sessions over two days across three tracks (AI in Healthcare, Education, Industry),
+          with their halls, session chairs, rapporteurs (as coordinators) and paper IDs. Day 1 starts in progress; Day 2 is upcoming.
           All records are tagged as simulated; meeting links point to a placeholder domain, not Microsoft Teams.
         </p>
         <DemoDataControls hasData={venues.length > 0} />

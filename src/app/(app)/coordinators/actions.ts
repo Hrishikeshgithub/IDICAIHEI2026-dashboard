@@ -44,23 +44,17 @@ export async function deleteCoordinatorAction(id: string) {
   revalidatePath("/", "layout");
 }
 
-const assignSchema = z.object({ coordinator_id: z.uuid(), venue_id: z.preprocess((v) => (v === "" ? null : v), z.uuid().nullable()) });
+const assignSchema = z.object({ coordinator_id: z.uuid(), venue_id: z.uuid() });
 
-/** Assigns a coordinator to a venue (or unassigns when venue_id is empty). A venue has one coordinator. */
+/** Adds a session to a coordinator. A session has one coordinator; a coordinator may have many sessions. */
 export async function assignCoordinatorAction(fd: FormData) {
   const user = await requireSuperAdmin();
   const parsed = assignSchema.safeParse(Object.fromEntries(fd));
   if (!parsed.success) return;
   const { coordinator_id, venue_id } = parsed.data;
   const supabase = await createClient();
-
-  // Free the coordinator from any current venue first (coordinator_id is unique per venue).
-  const clear = await supabase.from("venues").update({ coordinator_id: null }).eq("coordinator_id", coordinator_id);
-  if (clear.error) return;
-  if (venue_id) {
-    const set = await supabase.from("venues").update({ coordinator_id }).eq("id", venue_id);
-    if (set.error) return;
-  }
+  const { error } = await supabase.from("venues").update({ coordinator_id }).eq("id", venue_id);
+  if (error) return;
   await logAudit(supabase, user.id, "assign_coordinator", "coordinator", coordinator_id, { venue_id });
   revalidatePath("/", "layout");
 }

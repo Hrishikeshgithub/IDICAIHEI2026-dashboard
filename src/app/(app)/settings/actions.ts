@@ -13,10 +13,10 @@ export async function seedDemoAction(): Promise<ActionState> {
   const user = await requireSuperAdmin();
   const supabase = await createClient();
   try {
-    const { venues } = await seedDemoData(supabase);
-    await logAudit(supabase, user.id, "seed_demo_data", "conference", null, { venues });
+    const { venues, coordinators } = await seedDemoData(supabase);
+    await logAudit(supabase, user.id, "seed_demo_data", "conference", null, { venues, coordinators });
     revalidatePath("/", "layout");
-    return { ok: `Seeded ${venues} demo venues with coordinators and meetings.` };
+    return { ok: `Seeded ${venues} sessions and ${coordinators} coordinators.` };
   } catch (e) {
     return { error: e instanceof Error ? e.message : "Seeding failed." };
   }

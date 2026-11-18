@@ -11,6 +11,17 @@ export interface VenueFilters {
   q?: string;
   category?: Category;
   status?: MeetingStatus;
+  day?: number;
+}
+
+const TRACK_ORDER: Record<Category, number> = { medical_healthcare: 0, education: 1, industry: 2 };
+/** Day, then track, then session number (AIH2 before AIH10). */
+function sessionOrder(a: Venue, b: Venue) {
+  return (
+    a.day_number - b.day_number ||
+    TRACK_ORDER[a.category] - TRACK_ORDER[b.category] ||
+    a.venue_code.localeCompare(b.venue_code, undefined, { numeric: true })
+  );
 }
 
 type VenueRow = Venue & { coordinators: Coordinator | null; meetings: Meeting[] };
@@ -34,10 +45,12 @@ export async function getVenueOverviews(filters: VenueFilters = {}): Promise<Ven
   }));
 
   if (filters.status) rows = rows.filter((v) => v.meeting?.meeting_status === filters.status);
+  if (filters.day) rows = rows.filter((v) => v.day_number === filters.day);
+  rows.sort(sessionOrder);
   if (filters.q) {
     const q = filters.q.toLowerCase();
     rows = rows.filter((v) =>
-      [v.venue_name, v.venue_code, v.location, v.coordinator?.full_name, v.meeting?.meeting_title]
+      [v.venue_name, v.venue_code, v.location, v.coordinator?.full_name, v.meeting?.meeting_title, v.subtrack, v.session_chairs]
         .some((s) => s?.toLowerCase().includes(q)),
     );
   }
@@ -56,15 +69,17 @@ export async function getVenueOverview(id: string): Promise<VenueOverview | null
   return { ...venue, coordinator: coordinators, meeting: meetings[0] ?? null };
 }
 
-export async function getCoordinators(): Promise<(Coordinator & { venue: Pick<Venue, "id" | "venue_name" | "venue_code"> | null })[]> {
+export type CoordinatorWithVenues = Coordinator & { venues: Pick<Venue, "id" | "venue_name" | "venue_code" | "day_number">[] };
+
+export async function getCoordinators(): Promise<CoordinatorWithVenues[]> {
   const supabase = await createClient();
   const [{ data: coords }, { data: venues }] = await Promise.all([
     supabase.from("coordinators").select("*").order("full_name"),
-    supabase.from("venues").select("id, venue_name, venue_code, coordinator_id"),
+    supabase.from("venues").select("id, venue_name, venue_code, day_number, coordinator_id").order("day_number").order("venue_code"),
   ]);
   return ((coords ?? []) as Coordinator[]).map((c) => ({
     ...c,
-    venue: venues?.find((v) => v.coordinator_id === c.id) ?? null,
+    venues: (venues ?? []).filter((v) => v.coordinator_id === c.id),
   }));
 }
 

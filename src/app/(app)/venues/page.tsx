@@ -23,7 +23,7 @@ export default async function VenuesPage({ searchParams }: { searchParams: Promi
         </div>
         <Link href="/venues/new" className={buttonVariants()}>Add venue</Link>
       </div>
-      <VenueFilters action="/venues" q={filters.q} category={filters.category} status={filters.status} />
+      <VenueFilters action="/venues" q={filters.q} category={filters.category} status={filters.status} day={filters.day} />
 
       <div className="overflow-x-auto glass rounded-3xl">
         <table className="w-full min-w-[900px] text-left text-sm">

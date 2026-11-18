@@ -26,7 +26,7 @@ export default async function MeetingsPage({ searchParams }: { searchParams: Pro
         </div>
         <Link href="/meetings/new" className={buttonVariants()}>Create meeting</Link>
       </div>
-      <VenueFilters action="/meetings" q={filters.q} category={filters.category} status={filters.status} />
+      <VenueFilters action="/meetings" q={filters.q} category={filters.category} status={filters.status} day={filters.day} />
 
       <div className="overflow-x-auto glass rounded-3xl">
         <table className="w-full min-w-[900px] text-left text-sm">

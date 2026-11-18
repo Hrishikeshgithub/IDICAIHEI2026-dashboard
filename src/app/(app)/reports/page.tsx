@@ -19,6 +19,7 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
   if (filters.q) exportParams.set("q", filters.q);
   if (filters.category) exportParams.set("category", filters.category);
   if (filters.status) exportParams.set("status", filters.status);
+  if (filters.day) exportParams.set("day", String(filters.day));
 
   const totalAttendees = rows.reduce((n, r) => n + r.total_attendees, 0);
 
@@ -35,7 +36,7 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
           <Download className="size-4" aria-hidden /> Export summary CSV
         </a>
       </div>
-      <VenueFilters action="/reports" q={filters.q} category={filters.category} status={filters.status} />
+      <VenueFilters action="/reports" q={filters.q} category={filters.category} status={filters.status} day={filters.day} />
 
       <div className="overflow-x-auto glass rounded-3xl">
         <table className="w-full min-w-[960px] text-left text-sm">

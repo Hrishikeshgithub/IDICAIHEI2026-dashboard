@@ -41,7 +41,16 @@ export interface Meeting {
   actual_end_time: string | null;
   last_activity_at: string | null;
   health_status: HealthStatus;
+  schedule: ScheduleBlock[];
   data_source: DataSource;
+}
+
+export interface ScheduleBlock {
+  label: string;
+  start: string;
+  end: string;
+  papers: string[];
+  kind: "session" | "break";
 }
 
 export interface Venue {
@@ -52,6 +61,11 @@ export interface Venue {
   category: Category;
   location: string;
   coordinator_id: string | null;
+  mode: "offline" | "online";
+  floor: string | null;
+  subtrack: string | null;
+  session_chairs: string | null;
+  day_number: number;
   created_at: string;
 }
 

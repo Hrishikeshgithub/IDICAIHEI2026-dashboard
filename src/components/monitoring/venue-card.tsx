@@ -14,7 +14,12 @@ export function VenueCard({ venue }: { venue: VenueOverview }) {
     <article className="flex flex-col glass lift rounded-3xl p-4">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="text-xs font-medium text-slate-500">{venue.venue_code} · {CATEGORY_LABELS[venue.category]}</p>
+          <p className="flex flex-wrap items-center gap-1.5 text-xs font-medium text-slate-500">
+            <span className="rounded-md bg-slate-900/[0.07] px-1.5 py-0.5 font-semibold text-slate-700 dark:bg-white/10">{venue.venue_code}</span>
+            {CATEGORY_LABELS[venue.category]}
+            <span aria-hidden>·</span> Day {venue.day_number}
+            <span aria-hidden>·</span> {venue.mode === "online" ? "Online" : "In person"}
+          </p>
           <h3 className="truncate text-sm font-semibold text-slate-900" title={venue.venue_name}>
             <Link href={`/live-monitoring/${venue.id}`} className="hover:underline">{venue.venue_name}</Link>
           </h3>

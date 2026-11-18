@@ -9,8 +9,7 @@ export default async function EditVenuePage({ params }: { params: Promise<{ id: 
   const { id } = await params;
   const venue = await getVenueOverview(id);
   if (!venue) notFound();
-  // Offer unassigned coordinators plus the one already on this venue.
-  const coordinators = (await getCoordinators()).filter((c) => !c.venue || c.venue.id === venue.id);
+  const coordinators = (await getCoordinators()).filter((c) => c.account_status === "active" || c.id === venue.coordinator_id);
   return (
     <div className="space-y-5">
       <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-[28px]">Edit venue · {venue.venue_code}</h1>

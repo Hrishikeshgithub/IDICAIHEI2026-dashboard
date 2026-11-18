@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { getMeetingActivity, getVenueOverview } from "@/lib/data/queries";
 import { StatusBadge } from "@/components/monitoring/status-badge";
-import { ParticipantsSection, TechnicalSection, TimelineSection } from "@/components/monitoring/venue-sections";
+import { ParticipantsSection, ScheduleSection, TechnicalSection, TimelineSection } from "@/components/monitoring/venue-sections";
 import { CATEGORY_LABELS, HEALTH_LABELS, formatDateTime, formatDuration } from "@/lib/labels";
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
@@ -29,7 +29,7 @@ export default async function VenueDetailPage({ params }: { params: Promise<{ id
       </Link>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-medium text-slate-500">{venue.venue_code} · {CATEGORY_LABELS[venue.category]}</p>
+          <p className="text-xs font-medium text-slate-500">{venue.venue_code} · {CATEGORY_LABELS[venue.category]} · Day {venue.day_number} · {venue.mode === "online" ? "Online" : "In person"}</p>
           <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-[28px]">{venue.venue_name}</h1>
           <p className="text-sm text-slate-500">{venue.location}</p>
         </div>
@@ -50,6 +50,9 @@ export default async function VenueDetailPage({ params }: { params: Promise<{ id
             <h2 className="text-sm font-semibold text-slate-900">Meeting information</h2>
             <dl className="mt-2 divide-y divide-slate-100">
               <Row label="Title">{m.meeting_title}</Row>
+              {venue.subtrack && <Row label="Subtrack">{venue.subtrack}</Row>}
+              {venue.session_chairs && <Row label="Session chairs">{venue.session_chairs}</Row>}
+              {venue.floor && <Row label="Floor">{venue.floor}</Row>}
               <Row label="Schedule">{formatDateTime(m.start_time)} – {formatDateTime(m.end_time)}</Row>
               <Row label="Provider">{m.meeting_provider === "mock" ? "Mock (demo)" : "Microsoft Teams"}</Row>
               <Row label="Coordinator">{venue.coordinator?.full_name ?? "Unassigned"}</Row>
@@ -66,6 +69,7 @@ export default async function VenueDetailPage({ params }: { params: Promise<{ id
               <Row label="Data source">{m.data_source === "simulated" ? "Simulated (demo)" : "Provider"}</Row>
             </dl>
           </section>
+          <ScheduleSection blocks={m.schedule} />
           <TechnicalSection metrics={activity.metrics} alerts={activity.alerts} />
           <TimelineSection events={activity.events} />
           <ParticipantsSection participants={activity.participants} />

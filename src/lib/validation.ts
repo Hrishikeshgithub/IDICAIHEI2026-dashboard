@@ -10,6 +10,11 @@ export const venueSchema = z.object({
   category: z.enum(CATEGORIES as [string, ...string[]], { message: "Choose a category." }),
   location: z.string().trim().min(2, "Location is required.").max(160),
   coordinator_id: z.preprocess(emptyToNull, z.uuid().nullable()),
+  mode: z.enum(["offline", "online"]),
+  floor: optionalText(60),
+  subtrack: optionalText(300),
+  session_chairs: optionalText(300),
+  day_number: z.coerce.number().int().min(1).max(5),
 });
 
 export const coordinatorSchema = z.object({

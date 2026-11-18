@@ -3,12 +3,17 @@ import { CATEGORIES, CATEGORY_LABELS, MEETING_STATUSES, STATUS_LABELS } from "@/
 
 /** GET form: filters live in the URL, so the pages stay server-rendered. */
 export function VenueFilters({
-  action, q, category, status, showStatus = true,
-}: { action: string; q?: string; category?: string; status?: string; showStatus?: boolean }) {
+  action, q, category, status, day, showStatus = true,
+}: { action: string; q?: string; category?: string; status?: string; day?: number; showStatus?: boolean }) {
   const field = "h-10 rounded-2xl border border-slate-900/10 bg-white/60 px-3 backdrop-blur dark:border-white/10 text-sm text-slate-900";
   return (
     <form action={action} className="flex flex-wrap items-center gap-2">
       <input name="q" defaultValue={q} placeholder="Search venue, city, coordinator…" aria-label="Search" className={`${field} w-full sm:w-64`} />
+      <select name="day" defaultValue={day ? String(day) : ""} aria-label="Day" className={field}>
+        <option value="">All days</option>
+        <option value="1">Day 1</option>
+        <option value="2">Day 2</option>
+      </select>
       <select name="category" defaultValue={category ?? ""} aria-label="Category" className={field}>
         <option value="">All categories</option>
         {CATEGORIES.map((c) => <option key={c} value={c}>{CATEGORY_LABELS[c]}</option>)}

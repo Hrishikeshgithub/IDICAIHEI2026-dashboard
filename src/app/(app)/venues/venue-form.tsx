@@ -24,7 +24,21 @@ export function VenueForm({
         <option value="" disabled>Select category</option>
         {CATEGORIES.map((c) => <option key={c} value={c}>{CATEGORY_LABELS[c]}</option>)}
       </SelectField>
+      <div className="grid gap-4 sm:grid-cols-3">
+        <SelectField label="Day" name="day_number" defaultValue={String(venue?.day_number ?? 1)}>
+          <option value="1">Day 1</option>
+          <option value="2">Day 2</option>
+          <option value="3">Day 3</option>
+        </SelectField>
+        <SelectField label="Mode" name="mode" defaultValue={venue?.mode ?? "offline"}>
+          <option value="offline">Offline (in person)</option>
+          <option value="online">Online</option>
+        </SelectField>
+        <TextField label="Floor" name="floor" defaultValue={venue?.floor ?? ""} placeholder="Ground Floor" />
+      </div>
       <TextField label="Physical location" name="location" defaultValue={venue?.location} required />
+      <TextField label="Subtrack" name="subtrack" defaultValue={venue?.subtrack ?? ""} placeholder="Medical Image Processing / …" />
+      <TextField label="Session chairs" name="session_chairs" defaultValue={venue?.session_chairs ?? ""} placeholder="Dr. A; Dr. B" />
       <SelectField label="Assigned coordinator" name="coordinator_id" defaultValue={venue?.coordinator_id}>
         <option value="">Unassigned</option>
         {coordinators.map((c) => <option key={c.id} value={c.id}>{c.full_name}</option>)}

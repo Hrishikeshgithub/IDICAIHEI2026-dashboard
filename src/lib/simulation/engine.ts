@@ -121,9 +121,10 @@ function stepMeeting(m: MeetingRow, now: Date): MeetingStep {
   }
 
   if (status === "scheduled") {
-    // Starts near its scheduled time. A small random chance accelerates it so a demo shows the full lifecycle.
-    const startsSoon = new Date(m.start_time).getTime() - now.getTime() <= 5 * MIN;
-    if (startsSoon || chance(0.04)) s.setStatus("starting", "Session is starting");
+    // Starts near its scheduled time. Sessions due within 3 hours get a small random chance of starting
+    // early so a demo shows the full lifecycle; later sessions (e.g. Day 2) stay scheduled.
+    const untilStart = new Date(m.start_time).getTime() - now.getTime();
+    if (untilStart <= 5 * MIN || (untilStart <= 180 * MIN && chance(0.04))) s.setStatus("starting", "Session is starting");
   } else if (status === "starting") {
     if (chance(0.5)) {
       if (chance(0.85)) s.startSession();
