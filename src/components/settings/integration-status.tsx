@@ -15,7 +15,7 @@ export async function IntegrationStatus() {
   const teamsSelectedButNotReady = status.selectedProvider === "microsoft_teams" && !status.configured;
 
   return (
-    <section className="rounded-2xl border border-slate-200/70 bg-white shadow-card p-5">
+    <section className="glass rounded-3xl p-5">
       <h2 className="text-sm font-semibold text-slate-900">Meeting provider &amp; Microsoft integration</h2>
       <dl className="mt-3 grid gap-3 text-sm sm:grid-cols-3">
         <div>

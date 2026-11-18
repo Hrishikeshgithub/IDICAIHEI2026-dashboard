@@ -14,14 +14,14 @@ export function LoginForm({ notice }: { notice?: string }) {
     <form action={action} className="space-y-4">
       <div className="space-y-1.5">
         <Label htmlFor="email">Email</Label>
-        <Input id="email" name="email" type="email" autoComplete="email" required />
+        <Input id="email" name="email" type="email" autoComplete="email" required className="h-10 rounded-2xl border-slate-900/10 bg-white/60 px-3 backdrop-blur dark:border-white/10" />
       </div>
       <div className="space-y-1.5">
         <Label htmlFor="password">Password</Label>
-        <Input id="password" name="password" type="password" autoComplete="current-password" required />
+        <Input id="password" name="password" type="password" autoComplete="current-password" required className="h-10 rounded-2xl border-slate-900/10 bg-white/60 px-3 backdrop-blur dark:border-white/10" />
       </div>
       {message && <p role="alert" className="text-sm text-red-600">{message}</p>}
-      <Button type="submit" className="w-full" disabled={pending}>
+      <Button type="submit" className="btn-accent h-11 w-full rounded-2xl border-0 text-sm font-semibold" disabled={pending}>
         {pending ? "Signing in…" : "Sign in"}
       </Button>
     </form>

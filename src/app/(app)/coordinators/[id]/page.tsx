@@ -13,10 +13,10 @@ export default async function EditCoordinatorPage({ params }: { params: Promise<
   const history = await getCoordinatorHistory(coordinator.id, coordinator.email);
   return (
     <div className="space-y-5">
-      <h1 className="text-xl font-semibold text-slate-900">Edit coordinator</h1>
+      <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-[28px]">Edit coordinator</h1>
       <CoordinatorForm action={updateCoordinatorAction.bind(null, coordinator.id)} coordinator={coordinator} />
 
-      <section className="max-w-xl rounded-2xl border border-slate-200/70 bg-white shadow-card p-5">
+      <section className="max-w-xl glass rounded-3xl p-5">
         <h2 className="text-sm font-semibold text-slate-900">Session history</h2>
         {history.sessions.length === 0 ? (
           <p className="mt-2 text-sm text-slate-500">No sessions attended yet.</p>

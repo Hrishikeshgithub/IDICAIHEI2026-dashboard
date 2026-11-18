@@ -3,7 +3,7 @@ import { formatDateTime, formatTime } from "@/lib/labels";
 import type { EventRecord, MetricRecord, NotificationRecord, ParticipantRecord } from "@/lib/data/queries";
 import { cn } from "@/lib/utils";
 
-const card = "rounded-2xl border border-slate-200/70 bg-white shadow-card p-4";
+const card = "glass rounded-3xl p-4";
 
 function duration(seconds: number | null, joinedAt: string): string {
   const s = seconds ?? Math.max(0, Math.floor((Date.now() - new Date(joinedAt).getTime()) / 1000));

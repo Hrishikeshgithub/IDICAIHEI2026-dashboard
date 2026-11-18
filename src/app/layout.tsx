@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Inter, Inter_Tight } from "next/font/google";
 import "./globals.css";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-});
+const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
+const interTight = Inter_Tight({ variable: "--font-inter-tight", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Conference Operations Dashboard",
@@ -17,7 +15,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${manrope.variable} h-full antialiased`}
+      className={`${inter.variable} ${interTight.variable} h-full antialiased`}
     >
       <head>
         {/* Applies the saved/system theme before first paint to avoid a light flash. Static string, no user input. */}

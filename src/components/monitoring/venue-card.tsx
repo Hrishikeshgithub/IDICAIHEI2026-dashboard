@@ -11,7 +11,7 @@ export function VenueCard({ venue }: { venue: VenueOverview }) {
   const running = m && ["live", "technical_issue", "starting", "waiting"].includes(m.meeting_status);
 
   return (
-    <article className="flex flex-col rounded-2xl border border-slate-200/70 bg-white shadow-card p-4 shadow-sm">
+    <article className="flex flex-col glass lift rounded-3xl p-4">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <p className="text-xs font-medium text-slate-500">{venue.venue_code} · {CATEGORY_LABELS[venue.category]}</p>

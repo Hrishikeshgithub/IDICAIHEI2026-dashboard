@@ -15,7 +15,7 @@ export function VenueForm({
 }: { action: Action; venue?: Venue; coordinators: { id: string; full_name: string }[] }) {
   const [state, formAction, pending] = useActionState(action, undefined);
   return (
-    <form action={formAction} className="grid max-w-xl gap-4 rounded-2xl border border-slate-200/70 bg-white shadow-card p-5">
+    <form action={formAction} className="grid max-w-xl gap-4 glass rounded-3xl p-5">
       <div className="grid gap-4 sm:grid-cols-[120px_1fr]">
         <TextField label="Venue ID" name="venue_code" defaultValue={venue?.venue_code} placeholder="V19" required />
         <TextField label="Venue name" name="venue_name" defaultValue={venue?.venue_name} required />

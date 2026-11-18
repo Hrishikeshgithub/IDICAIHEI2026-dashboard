@@ -19,7 +19,7 @@ export default async function NotificationsPage({ searchParams }: { searchParams
     <div className="space-y-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="text-xl font-semibold text-slate-900">Notifications</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-[28px]">Notifications</h1>
           <p className="mt-1 text-sm text-slate-500">Alerts raised by the simulation. They are not Microsoft Teams alerts.</p>
         </div>
         {canMark && items.some((n) => !n.is_read) && (
@@ -32,13 +32,13 @@ export default async function NotificationsPage({ searchParams }: { searchParams
       </div>
 
       {items.length === 0 ? (
-        <p className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
+        <p className="glass rounded-3xl border-dashed p-8 text-center text-sm text-slate-500">
           {unreadOnly ? "No unread notifications." : "No notifications yet. Start the simulation to generate alerts."}
         </p>
       ) : (
-        <ul className="divide-y divide-slate-100 rounded-2xl border border-slate-200/70 bg-white shadow-card">
+        <ul className="divide-y divide-slate-100 glass rounded-3xl">
           {items.map((n) => (
-            <li key={n.id} className={cn("flex flex-wrap items-center justify-between gap-3 px-4 py-3", !n.is_read && "bg-slate-50")}>
+            <li key={n.id} className={cn("flex flex-wrap items-center justify-between gap-3 px-4 py-3", !n.is_read && "bg-white/40 dark:bg-white/[0.04]")}>
               <div className="min-w-0 space-y-1">
                 <div className="flex items-center gap-2">
                   <SeverityBadge severity={n.severity} />

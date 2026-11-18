@@ -18,16 +18,16 @@ export default async function VenuesPage({ searchParams }: { searchParams: Promi
     <div className="space-y-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="text-xl font-semibold text-slate-900">Venues</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-[28px]">Venues</h1>
           <p className="mt-1 text-sm text-slate-500">{venues.length} venue{venues.length === 1 ? "" : "s"}</p>
         </div>
         <Link href="/venues/new" className={buttonVariants()}>Add venue</Link>
       </div>
       <VenueFilters action="/venues" q={filters.q} category={filters.category} status={filters.status} />
 
-      <div className="overflow-x-auto rounded-2xl border border-slate-200/70 bg-white shadow-card">
+      <div className="overflow-x-auto glass rounded-3xl">
         <table className="w-full min-w-[900px] text-left text-sm">
-          <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+          <thead className="border-b border-slate-900/[0.06] text-[11px] uppercase tracking-[0.08em] text-slate-500 dark:border-white/[0.06]">
             <tr>
               {["ID", "Venue", "Category", "Location", "Coordinator", "Meeting", "Schedule", "Status", "Participants", ""].map((h) => (
                 <th key={h} scope="col" className="px-3 py-2 font-medium">{h}</th>

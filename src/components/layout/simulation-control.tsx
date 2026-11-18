@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { simulationTickAction, startSimulationAction, stopSimulationAction } from "@/app/(app)/simulation-actions";
 
 const TICK_MS = 6000;
@@ -51,14 +51,34 @@ export function SimulationControl() {
   }
 
   return (
-    <div className="flex items-center gap-2">
-      <Button size="sm" variant={running ? "outline" : "default"} onClick={toggle} disabled={busy}>
+    <div className="space-y-1.5">
+      <button
+        type="button"
+        onClick={toggle}
+        disabled={busy}
+        className={cn(
+          "flex w-full items-center justify-center gap-2 rounded-2xl px-3 py-2.5 text-sm font-semibold transition disabled:opacity-60",
+          running ? "glass text-slate-900" : "btn-accent",
+        )}
+      >
         {running ? <Pause className="size-4" aria-hidden /> : <Play className="size-4" aria-hidden />}
-        {running ? "Stop simulation" : "Start simulation"}
-      </Button>
-      <span className="hidden text-xs text-slate-500 lg:inline" role="status">
-        {error ? <span className="text-red-600">{error}</span> : running ? `Running · ${ticks} updates` : "Stopped"}
-      </span>
+        {busy ? "Working…" : running ? "Stop simulation" : "Start simulation"}
+      </button>
+      <p className="flex items-center justify-center gap-1.5 text-[11px] text-slate-500" role="status">
+        {error ? (
+          <span className="text-red-600">{error}</span>
+        ) : running ? (
+          <>
+            <span className="relative flex size-1.5">
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+              <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
+            </span>
+            Live · {ticks} updates
+          </>
+        ) : (
+          "Simulation stopped"
+        )}
+      </p>
     </div>
   );
 }

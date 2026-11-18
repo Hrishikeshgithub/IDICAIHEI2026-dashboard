@@ -5,7 +5,7 @@ import { CATEGORIES, CATEGORY_LABELS, MEETING_STATUSES, STATUS_LABELS } from "@/
 export function VenueFilters({
   action, q, category, status, showStatus = true,
 }: { action: string; q?: string; category?: string; status?: string; showStatus?: boolean }) {
-  const field = "h-9 rounded-xl border border-slate-300 bg-white px-2.5 text-sm text-slate-900";
+  const field = "h-10 rounded-2xl border border-slate-900/10 bg-white/60 px-3 backdrop-blur dark:border-white/10 text-sm text-slate-900";
   return (
     <form action={action} className="flex flex-wrap items-center gap-2">
       <input name="q" defaultValue={q} placeholder="Search venue, city, coordinator…" aria-label="Search" className={`${field} w-full sm:w-64`} />
@@ -19,7 +19,7 @@ export function VenueFilters({
           {MEETING_STATUSES.map((s) => <option key={s} value={s}>{STATUS_LABELS[s]}</option>)}
         </select>
       )}
-      <button type="submit" className="h-9 rounded-xl bg-slate-900 px-3 text-sm font-medium text-slate-50 hover:bg-slate-800">Apply</button>
+      <button type="submit" className="h-10 rounded-2xl bg-slate-900 px-4 text-sm font-medium text-slate-50 hover:bg-slate-800">Apply</button>
       <Link href={action} className="text-sm text-slate-500 hover:text-slate-900">Clear</Link>
     </form>
   );

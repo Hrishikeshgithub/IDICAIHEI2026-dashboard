@@ -13,7 +13,7 @@ export default async function EditVenuePage({ params }: { params: Promise<{ id: 
   const coordinators = (await getCoordinators()).filter((c) => !c.venue || c.venue.id === venue.id);
   return (
     <div className="space-y-5">
-      <h1 className="text-xl font-semibold text-slate-900">Edit venue · {venue.venue_code}</h1>
+      <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-[28px]">Edit venue · {venue.venue_code}</h1>
       <VenueForm action={updateVenueAction.bind(null, venue.id)} venue={venue} coordinators={coordinators} />
     </div>
   );

@@ -30,7 +30,7 @@ export default async function VenueDetailPage({ params }: { params: Promise<{ id
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-xs font-medium text-slate-500">{venue.venue_code} · {CATEGORY_LABELS[venue.category]}</p>
-          <h1 className="text-xl font-semibold text-slate-900">{venue.venue_name}</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-[28px]">{venue.venue_name}</h1>
           <p className="text-sm text-slate-500">{venue.location}</p>
         </div>
         <div className="flex items-center gap-3">
@@ -46,7 +46,7 @@ export default async function VenueDetailPage({ params }: { params: Promise<{ id
 
       {m ? (
         <div className="grid gap-5 md:grid-cols-2">
-          <section className="rounded-2xl border border-slate-200/70 bg-white shadow-card p-4">
+          <section className="glass rounded-3xl p-4">
             <h2 className="text-sm font-semibold text-slate-900">Meeting information</h2>
             <dl className="mt-2 divide-y divide-slate-100">
               <Row label="Title">{m.meeting_title}</Row>
@@ -56,7 +56,7 @@ export default async function VenueDetailPage({ params }: { params: Promise<{ id
               <Row label="Coordinator email">{venue.coordinator?.email ?? "—"}</Row>
             </dl>
           </section>
-          <section className="rounded-2xl border border-slate-200/70 bg-white shadow-card p-4">
+          <section className="glass rounded-3xl p-4">
             <h2 className="text-sm font-semibold text-slate-900">Live statistics</h2>
             <dl className="mt-2 divide-y divide-slate-100">
               <Row label="Participants">{m.current_participants} / {m.expected_participants} expected</Row>
@@ -74,7 +74,7 @@ export default async function VenueDetailPage({ params }: { params: Promise<{ id
           )}
         </div>
       ) : (
-        <p className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">No meeting is configured for this venue.</p>
+        <p className="glass rounded-3xl border-dashed p-8 text-center text-sm text-slate-500">No meeting is configured for this venue.</p>
       )}
     </div>
   );

@@ -30,7 +30,7 @@ export default async function AttendanceDetailPage({ params }: { params: Promise
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-xs font-medium text-slate-500">{summary.venue_code} · {CATEGORY_LABELS[summary.category]}</p>
-          <h1 className="text-xl font-semibold text-slate-900">{summary.venue_name}</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-[28px]">{summary.venue_name}</h1>
           <p className="text-sm text-slate-500">{summary.meeting_title}</p>
         </div>
         <div className="flex items-center gap-3">
@@ -48,16 +48,16 @@ export default async function AttendanceDetailPage({ params }: { params: Promise
           ["Total attendees", `${summary.total_attendees} (expected ${summary.expected_participants})`],
           ["Coordinator attendance", summary.coordinator_sessions > 0 ? `${Math.round(summary.coordinator_seconds / 60)} min` : "Did not attend"],
         ].map(([k, v]) => (
-          <div key={k} className="rounded-2xl border border-slate-200/70 bg-white shadow-card p-3">
+          <div key={k} className="glass rounded-3xl p-3">
             <dt className="text-xs text-slate-500">{k}</dt>
             <dd className="mt-0.5 text-sm font-medium text-slate-900">{v}</dd>
           </div>
         ))}
       </dl>
 
-      <div className="overflow-x-auto rounded-2xl border border-slate-200/70 bg-white shadow-card">
+      <div className="overflow-x-auto glass rounded-3xl">
         <table className="w-full min-w-[640px] text-left text-sm">
-          <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+          <thead className="border-b border-slate-900/[0.06] text-[11px] uppercase tracking-[0.08em] text-slate-500 dark:border-white/[0.06]">
             <tr>{["Participant", "Role", "Joined", "Left", "Participation"].map((h) => <th key={h} scope="col" className="px-3 py-2 font-medium">{h}</th>)}</tr>
           </thead>
           <tbody className="divide-y divide-slate-100">

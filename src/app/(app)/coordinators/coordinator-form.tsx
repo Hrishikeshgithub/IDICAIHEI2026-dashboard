@@ -12,7 +12,7 @@ type Action = (prev: FormState | undefined, fd: FormData) => Promise<FormState>;
 export function CoordinatorForm({ action, coordinator }: { action: Action; coordinator?: Coordinator }) {
   const [state, formAction, pending] = useActionState(action, undefined);
   return (
-    <form action={formAction} className="grid max-w-xl gap-4 rounded-2xl border border-slate-200/70 bg-white shadow-card p-5">
+    <form action={formAction} className="grid max-w-xl gap-4 glass rounded-3xl p-5">
       <TextField label="Full name" name="full_name" defaultValue={coordinator?.full_name} required />
       <TextField label="Email" name="email" type="email" defaultValue={coordinator?.email} required />
       <TextField label="Phone" name="phone" defaultValue={coordinator?.phone ?? ""} />

@@ -23,7 +23,7 @@ export function MeetingForm({
 }: { action: Action; meeting?: Meeting; venues: { id: string; label: string }[]; lockVenue?: boolean }) {
   const [state, formAction, pending] = useActionState(action, undefined);
   return (
-    <form action={formAction} className="grid max-w-xl gap-4 rounded-2xl border border-slate-200/70 bg-white shadow-card p-5">
+    <form action={formAction} className="grid max-w-xl gap-4 glass rounded-3xl p-5">
       {lockVenue && meeting ? <input type="hidden" name="venue_id" value={meeting.venue_id} /> : null}
       <SelectField label="Venue" name="venue_id" defaultValue={meeting?.venue_id} required>
         <option value="" disabled>Select venue</option>

@@ -11,19 +11,20 @@ const CHART_COLORS: Record<MeetingStatus, string> = {
   scheduled: "#94a3b8", starting: "#0ea5e9", live: "#10b981", waiting: "#f59e0b", ended: "#a1a1aa", technical_issue: "#ef4444",
 };
 
+// Glass tiles; the tints are translucent so the moving background still reads through.
 const TONES = {
-  indigo: "bg-tile-indigo border-transparent",
-  green: "bg-tile-green border-transparent",
-  amber: "bg-tile-amber border-transparent",
-  rose: "bg-tile-rose border-transparent",
-  plain: "bg-white border-slate-200/70",
+  indigo: "bg-tile-indigo",
+  green: "bg-tile-green",
+  amber: "bg-tile-amber",
+  rose: "bg-tile-rose",
+  plain: "",
 } as const;
 
 function Tile({ label, value, hint, tone = "plain" }: { label: string; value: number | string; hint?: string; tone?: keyof typeof TONES }) {
   return (
-    <div className={`rounded-2xl border shadow-card p-4 ${TONES[tone]}`}>
-      <p className="text-xs font-medium text-slate-500">{label}</p>
-      <p className="mt-1 text-2xl font-semibold tabular-nums text-slate-900">{value}</p>
+    <div className={`glass lift rounded-3xl p-4 sm:p-5 ${TONES[tone]}`}>
+      <p className="text-xs font-medium text-slate-600">{label}</p>
+      <p className="mt-2 font-heading text-[28px] font-semibold leading-none tracking-tight tabular-nums text-slate-900 sm:text-[32px]">{value}</p>
       {hint && <p className="mt-0.5 text-xs text-slate-500">{hint}</p>}
     </div>
   );
@@ -40,8 +41,8 @@ export default async function OverviewPage() {
   if (venues.length === 0) {
     return (
       <div>
-        <h1 className="text-xl font-semibold text-slate-900">Overview</h1>
-        <p className="mt-6 rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
+        <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-[28px]">Overview</h1>
+        <p className="mt-6 glass rounded-3xl border-dashed p-8 text-center text-sm text-slate-500">
           {user.role === "super_admin" ? (
             <>No venues yet. <Link href="/settings" className="font-medium text-slate-900 underline">Seed the demo data</Link> to populate the dashboard.</>
           ) : (
@@ -55,13 +56,13 @@ export default async function OverviewPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-slate-900">Overview</h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-[28px]">Overview</h1>
         <p className="mt-1 text-sm text-slate-500">
           {user.role === "super_admin" ? "Conference status across all venues." : "Status of your assigned venue."}
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-8">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4 2xl:grid-cols-8">
         <Tile tone="indigo" label="Total venues" value={s.totalVenues} />
         <Tile tone="green" label="Active (live)" value={s.byStatus.live} />
         <Tile label="Scheduled" value={s.byStatus.scheduled} />
@@ -73,7 +74,7 @@ export default async function OverviewPage() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
-        <section className="rounded-2xl border border-slate-200/70 bg-white shadow-card p-4 lg:col-span-2">
+        <section className="glass rounded-3xl p-4 lg:col-span-2">
           <h2 className="text-sm font-semibold text-slate-900">Meetings by status</h2>
           <p className="mb-2 text-xs text-slate-500">
             {(Object.keys(CATEGORY_LABELS) as (keyof typeof CATEGORY_LABELS)[]).map((c) => `${CATEGORY_LABELS[c]}: ${s.byCategory[c]}`).join(" · ")}
@@ -81,7 +82,7 @@ export default async function OverviewPage() {
           <StatusChart data={chart} />
         </section>
 
-        <section className="rounded-2xl border border-slate-200/70 bg-white shadow-card p-4">
+        <section className="glass rounded-3xl p-4">
           <h2 className="mb-3 text-sm font-semibold text-slate-900">Venues requiring attention</h2>
           {s.attention.length === 0 ? (
             <p className="text-sm text-slate-500">All venues are running normally.</p>
@@ -98,7 +99,7 @@ export default async function OverviewPage() {
         </section>
       </div>
 
-      <section className="rounded-2xl border border-slate-200/70 bg-white shadow-card p-4">
+      <section className="glass rounded-3xl p-4">
         <h2 className="mb-3 text-sm font-semibold text-slate-900">Recent platform activity</h2>
         {events.length === 0 ? (
           <p className="text-sm text-slate-500">No activity recorded yet.</p>

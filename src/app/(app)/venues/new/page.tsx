@@ -8,7 +8,7 @@ export default async function NewVenuePage() {
   const coordinators = (await getCoordinators()).filter((c) => !c.venue && c.account_status === "active");
   return (
     <div className="space-y-5">
-      <h1 className="text-xl font-semibold text-slate-900">Add venue</h1>
+      <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-[28px]">Add venue</h1>
       <VenueForm action={createVenueAction} coordinators={coordinators} />
     </div>
   );

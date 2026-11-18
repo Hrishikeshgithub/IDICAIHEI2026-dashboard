@@ -1,13 +1,13 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export const selectClass = "h-9 w-full rounded-xl border border-slate-300 bg-white px-2.5 text-sm text-slate-900";
+export const selectClass = "h-10 w-full rounded-2xl border border-slate-900/10 bg-white/60 px-3 backdrop-blur dark:border-white/10 text-sm text-slate-900";
 
 export function TextField({ label, name, ...props }: { label: string; name: string } & React.ComponentProps<"input">) {
   return (
     <div className="grid gap-1.5">
       <Label htmlFor={name}>{label}</Label>
-      <Input id={name} name={name} {...props} />
+      <Input id={name} name={name} className="h-10 rounded-2xl border-slate-900/10 bg-white/60 px-3 backdrop-blur dark:border-white/10" {...props} />
     </div>
   );
 }

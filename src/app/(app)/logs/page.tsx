@@ -29,7 +29,7 @@ export default async function LogsPage({ searchParams }: { searchParams: Promise
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-xl font-semibold text-slate-900">Activity Logs</h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-[28px]">Activity Logs</h1>
         <p className="mt-1 text-sm text-slate-500">Audit trail of administrative actions · {total} entries</p>
       </div>
 
@@ -42,13 +42,13 @@ export default async function LogsPage({ searchParams }: { searchParams: Promise
           <option value="">All entities</option>
           {options.entities.map((e) => <option key={e} value={e}>{labelize(e)}</option>)}
         </select>
-        <button type="submit" className="h-9 rounded-xl bg-slate-900 px-3 text-sm font-medium text-slate-50 hover:bg-slate-800">Apply</button>
+        <button type="submit" className="h-10 rounded-2xl bg-slate-900 px-4 text-sm font-medium text-slate-50 hover:bg-slate-800">Apply</button>
         <Link href="/logs" className="text-sm text-slate-500 hover:text-slate-900">Clear</Link>
       </form>
 
-      <div className="overflow-x-auto rounded-2xl border border-slate-200/70 bg-white shadow-card">
+      <div className="overflow-x-auto glass rounded-3xl">
         <table className="w-full min-w-[720px] text-left text-sm">
-          <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+          <thead className="border-b border-slate-900/[0.06] text-[11px] uppercase tracking-[0.08em] text-slate-500 dark:border-white/[0.06]">
             <tr>{["When", "User", "Action", "Entity", "Details"].map((h) => <th key={h} scope="col" className="px-3 py-2 font-medium">{h}</th>)}</tr>
           </thead>
           <tbody className="divide-y divide-slate-100">

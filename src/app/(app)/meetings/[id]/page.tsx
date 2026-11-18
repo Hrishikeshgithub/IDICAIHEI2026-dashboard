@@ -11,7 +11,7 @@ export default async function EditMeetingPage({ params }: { params: Promise<{ id
   if (!venue?.meeting) notFound();
   return (
     <div className="space-y-5">
-      <h1 className="text-xl font-semibold text-slate-900">Edit meeting · {venue.venue_code}</h1>
+      <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-[28px]">Edit meeting · {venue.venue_code}</h1>
       <MeetingForm
         action={updateMeetingAction.bind(null, id)}
         meeting={venue.meeting}

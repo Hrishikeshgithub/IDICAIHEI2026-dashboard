@@ -10,11 +10,11 @@ export default async function SettingsPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-xl font-semibold text-slate-900">Settings</h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-[28px]">Settings</h1>
         <p className="mt-1 text-sm text-slate-500">Conference configuration and demo data.</p>
       </div>
 
-      <section className="rounded-2xl border border-slate-200/70 bg-white shadow-card p-5">
+      <section className="glass rounded-3xl p-5">
         <h2 className="mb-4 text-sm font-semibold text-slate-900">Conference</h2>
         {conference ? (
           <ConferenceForm conference={conference} />
@@ -23,7 +23,7 @@ export default async function SettingsPage() {
         )}
       </section>
 
-      <section className="rounded-2xl border border-slate-200/70 bg-white shadow-card p-5">
+      <section className="glass rounded-3xl p-5">
         <h2 className="text-sm font-semibold text-slate-900">Demo data</h2>
         <p className="mb-4 mt-1 text-sm text-slate-500">
           Creates 18 venues (9 Medical &amp; Healthcare, 5 Education, 4 Industry) with coordinators and meetings.

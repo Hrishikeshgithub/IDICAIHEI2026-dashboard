@@ -11,14 +11,14 @@ export default async function LiveMonitoringPage({ searchParams }: { searchParam
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-xl font-semibold text-slate-900">Live Monitoring</h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-[28px]">Live Monitoring</h1>
         <p className="mt-1 text-sm text-slate-500">
           Operational status for each venue. This view shows meeting metadata only; open a venue&apos;s meeting link to see its session.
         </p>
       </div>
       <VenueFilters action="/live-monitoring" q={filters.q} category={filters.category} status={filters.status} />
       {venues.length === 0 ? (
-        <p className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
+        <p className="glass rounded-3xl border-dashed p-8 text-center text-sm text-slate-500">
           No venues match. {Object.keys(sp).length === 0 && "Seed demo data from Settings to populate the dashboard."}
         </p>
       ) : (
