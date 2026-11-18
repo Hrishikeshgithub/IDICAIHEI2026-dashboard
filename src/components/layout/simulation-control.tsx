@@ -11,7 +11,7 @@ const TICK_MS = 6000;
  * Drives the demo simulation from the browser. It only runs while this tab is open and the
  * admin has pressed Start — nothing keeps writing to the database in the background.
  */
-export function SimulationControl() {
+export function SimulationControl({ compact = false }: { compact?: boolean }) {
   const [running, setRunning] = useState(false);
   const [busy, setBusy] = useState(false);
   const [ticks, setTicks] = useState(0);
@@ -48,6 +48,22 @@ export function SimulationControl() {
       else setError(r.error);
     }
     setBusy(false);
+  }
+
+  if (compact) {
+    return (
+      <button
+        type="button"
+        onClick={toggle}
+        disabled={busy}
+        title={running ? "Stop simulation" : "Start simulation"}
+        aria-label={running ? "Stop simulation" : "Start simulation"}
+        className={cn("relative mx-auto grid size-11 place-items-center rounded-2xl transition disabled:opacity-60", running ? "glass text-slate-900" : "btn-accent")}
+      >
+        {running ? <Pause className="size-4" aria-hidden /> : <Play className="size-4" aria-hidden />}
+        {running && <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-emerald-500 ring-2 ring-white/60" aria-hidden />}
+      </button>
+    );
   }
 
   return (
