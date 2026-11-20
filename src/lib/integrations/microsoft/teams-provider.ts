@@ -5,7 +5,7 @@ import type {
 import type { MeetingStatus } from "@/lib/types";
 import { getMicrosoftConfig } from "./config";
 import {
-  attendanceReportListSchema, attendanceReportSchema, createOnlineMeetingBody, onlineMeetingSchema, type OnlineMeeting,
+  attendanceReportListSchema, attendanceReportSchema, createOnlineMeetingBody, onlineMeetingListSchema, onlineMeetingSchema, type OnlineMeeting,
 } from "./contracts";
 import { NotSupportedByGraphError } from "./errors";
 import { graphFetch, type GraphLogger } from "./graph-client";
@@ -66,6 +66,21 @@ export class MicrosoftTeamsProvider implements MeetingProvider {
   async getMeetingDetails(externalMeetingId: string): Promise<ProviderMeeting | null> {
     const res = await graphFetch(this.meetingPath(externalMeetingId), {}, this.log);
     return res ? this.toProviderMeeting(onlineMeetingSchema.parse(res)) : null;
+  }
+
+  /**
+   * Finds a meeting that already exists (e.g. created in Outlook) from its join link.
+   * GET /users/{organizer}/onlineMeetings?$filter=JoinWebUrl eq '<url-encoded joinWebUrl>'
+   * (needs OnlineMeetings.Read.All + the application access policy for the organizer).
+   */
+  async findMeetingIdByJoinUrl(joinUrl: string): Promise<string | null> {
+    const res = await graphFetch(
+      `/users/${this.organizer}/onlineMeetings?$filter=JoinWebUrl%20eq%20'${encodeURIComponent(joinUrl)}'`,
+      {},
+      this.log,
+    );
+    const list = onlineMeetingListSchema.parse(res);
+    return list.value[0]?.id ?? null;
   }
 
   /** Graph exposes no "current status" for a meeting; status must be derived from notifications/reports. */

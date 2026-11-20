@@ -4,6 +4,7 @@ import { missingMicrosoftVars } from "@/lib/integrations/microsoft/config";
 import { createProviderLogger } from "@/lib/integrations/microsoft/logger";
 import { processPendingEvents } from "@/lib/integrations/microsoft/processor";
 import { renewExpiringSubscriptions } from "@/lib/integrations/microsoft/subscriptions";
+import { syncAttendance } from "@/lib/integrations/microsoft/sync";
 
 export const dynamic = "force-dynamic";
 
@@ -31,7 +32,8 @@ async function run(request: Request) {
   try {
     const events = await processPendingEvents(db, log);
     const subscriptions = await renewExpiringSubscriptions(db, log);
-    return Response.json({ events, subscriptions });
+    const attendance = await syncAttendance(db);
+    return Response.json({ events, subscriptions, attendance });
   } catch (e) {
     console.error("microsoft cron failed", e instanceof Error ? e.message : e);
     return Response.json({ error: "Job failed." }, { status: 500 });

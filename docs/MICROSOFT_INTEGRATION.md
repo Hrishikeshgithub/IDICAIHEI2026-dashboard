@@ -132,3 +132,28 @@ decide whether near-real-time participant counts are a requirement; if so, that 
 5. Trigger a change; confirm a row appears in `provider_events`, and a repeat delivery does not add a second row.
 6. End a meeting, wait, and call `getMeetingAttendance`; compare with the Teams UI.
 7. Only then map resource change events to dashboard updates in `processor.ts` and tell users which fields are live.
+
+
+## 9. Connecting meetings created by hand in Outlook (current plan)
+
+The meeting links are created manually in Outlook/Teams (one per room, repeating over both days), so the dashboard
+does not create meetings. It looks them up and reads attendance afterwards.
+
+Settings → "Meeting provider & Microsoft integration" has three admin buttons (visible once the `MS_*` settings are present):
+
+1. **Test connection** – gets a token and, if a Teams link exists, does one real lookup. Errors are explained
+   (403 = access policy / admin consent not active yet, up to 30 minutes).
+2. **Link Teams meetings** – for every session whose join link is a Teams link, finds the Microsoft meeting
+   (`GET /users/{organizer}/onlineMeetings?$filter=JoinWebUrl eq '…'`, needs `OnlineMeetings.Read.All`) and stores its id.
+   Linked sessions switch from simulated to real data (their simulated activity is removed).
+3. **Sync attendance** – for each linked meeting that has a report (`OnlineMeetingArtifact.Read.All`), splits the
+   attendance into the sessions that share the link, using each session's start/end time (±15 minutes), and fills
+   the Reports and CSV. Reports only exist after a meeting ends. The same sync also runs from `/api/cron/microsoft`.
+
+Required Vercel environment variables: `MS_TENANT_ID`, `MS_CLIENT_ID`, `MS_CLIENT_SECRET`, `MS_ORGANIZER_USER_ID`
+(object id of the user that owns the meetings), `MS_WEBHOOK_CLIENT_STATE`, `MS_NOTIFICATION_BASE_URL`. `MEETING_PROVIDER`
+can stay `mock`: linking works per meeting. `SUPABASE_SERVICE_ROLE_KEY` and `CRON_SECRET` are only needed for the scheduled job.
+
+Not available from Teams: live participant counts, live status and live coordinator presence.
+Sessions must have their real dates and times before attendance can be split correctly.
+Status: written against the Graph reference, not yet run against the real tenant.

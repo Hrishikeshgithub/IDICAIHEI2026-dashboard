@@ -1,6 +1,7 @@
 import { getMicrosoftStatus } from "@/lib/integrations/microsoft/config";
 import { createClient } from "@/lib/supabase/server";
 import { formatDateTime } from "@/lib/labels";
+import { IntegrationActions } from "./integration-actions";
 
 /** Read-only readiness check for the future Microsoft Teams integration. Shows variable names only. */
 export async function IntegrationStatus() {
@@ -37,6 +38,8 @@ export async function IntegrationStatus() {
           MEETING_PROVIDER is set to microsoft_teams but the configuration is incomplete, so meeting creation will fail until it is fixed.
         </p>
       )}
+
+      {status.configured && <IntegrationActions />}
 
       <h3 className="mb-1 mt-4 text-xs font-semibold uppercase tracking-wide text-slate-500">Server environment (names only, values are never shown)</h3>
       <ul className="grid gap-1 text-sm sm:grid-cols-2">

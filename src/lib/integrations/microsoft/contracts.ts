@@ -15,6 +15,7 @@ export const onlineMeetingSchema = z.object({
   endDateTime: z.string().nullish(),
 });
 export type OnlineMeeting = z.infer<typeof onlineMeetingSchema>;
+export const onlineMeetingListSchema = z.object({ value: z.array(onlineMeetingSchema) });
 
 export const createOnlineMeetingBody = (input: { subject: string; startDateTime: string; endDateTime: string }) => ({
   subject: input.subject,
