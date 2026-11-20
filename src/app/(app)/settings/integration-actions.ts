@@ -6,7 +6,10 @@ import { createClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit";
 import { checkConnection, linkTeamsMeetings, syncAttendance, type SyncResult } from "@/lib/integrations/microsoft/sync";
 
-async function run(action: string, fn: (db: Awaited<ReturnType<typeof createClient>>) => Promise<SyncResult>): Promise<SyncResult> {
+type Db = Awaited<ReturnType<typeof createClient>>;
+
+// Note: a "use server" file may only export async functions, so the shared helper is not exported.
+async function run(action: string, fn: (db: Db) => Promise<SyncResult>): Promise<SyncResult> {
   const user = await requireSuperAdmin();
   const supabase = await createClient();
   try {
@@ -20,6 +23,12 @@ async function run(action: string, fn: (db: Awaited<ReturnType<typeof createClie
   }
 }
 
-export const testMicrosoftConnectionAction = () => run("teams_test_connection", checkConnection);
-export const linkTeamsMeetingsAction = () => run("teams_link_meetings", linkTeamsMeetings);
-export const syncTeamsAttendanceAction = () => run("teams_sync_attendance", syncAttendance);
+export async function testMicrosoftConnectionAction(): Promise<SyncResult> {
+  return run("teams_test_connection", checkConnection);
+}
+export async function linkTeamsMeetingsAction(): Promise<SyncResult> {
+  return run("teams_link_meetings", linkTeamsMeetings);
+}
+export async function syncTeamsAttendanceAction(): Promise<SyncResult> {
+  return run("teams_sync_attendance", syncAttendance);
+}
