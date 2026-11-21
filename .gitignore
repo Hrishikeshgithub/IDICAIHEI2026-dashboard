@@ -44,3 +44,6 @@ next-env.d.ts
 # Personal spreadsheets kept locally, never committed
 docs/*.xlsx
 docs/*.xls
+
+# Local-only files (real meeting links, rosters)
+private/
